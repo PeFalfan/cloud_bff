@@ -5,6 +5,7 @@ import com.cloud.bff.models.UserModel;
 import com.cloud.bff.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -25,8 +26,10 @@ public class UserServiceImpl implements UserService {
         try {
             responseModel.setData(
                     webClient.get()
-                            .uri("/GetAllUsers?")
+                            .uri("/ClientRest?code=kqD4zMtf_1q5A4WUO2izA-lSfWDa98Fmpl5mPxgL8LhUAzFu6V7PDw=="
+                                    )
                             .retrieve()
+
                             .bodyToFlux(UserModel.class)
                             .collectList()
                             .block()
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
             responseModel.setData(
                     webClient.post()
-                            .uri("/registerUser?")
+                            .uri("/ClientRest?code=kqD4zMtf_1q5A4WUO2izA-lSfWDa98Fmpl5mPxgL8LhUAzFu6V7PDw==")
                             .header("Content-Type", "application/json")
                             .bodyValue(json)
                             .exchangeToMono(response -> {
@@ -103,7 +106,7 @@ public class UserServiceImpl implements UserService {
         try {
             responseModel.setData(
                     webClient.put()
-                            .uri("/UpdateUserFunction?")
+                            .uri("/ClientRest?code=kqD4zMtf_1q5A4WUO2izA-lSfWDa98Fmpl5mPxgL8LhUAzFu6V7PDw==")
                             .header("Content-Type", "application/json")
                             .bodyValue(user)
                             .retrieve()
@@ -130,9 +133,11 @@ public class UserServiceImpl implements UserService {
         ResponseModel responseModel = new ResponseModel();
 
         try {
+            System.out.println(id);
             responseModel.setData(
-              webClient.delete()
-                      .uri("/deleteUser/" + id)
+              webClient.method(HttpMethod.DELETE)
+                      .uri("/ClientRest?code=kqD4zMtf_1q5A4WUO2izA-lSfWDa98Fmpl5mPxgL8LhUAzFu6V7PDw==")
+                      .bodyValue(id)
                       .retrieve()
                       .bodyToMono(String.class)
                       .block()
